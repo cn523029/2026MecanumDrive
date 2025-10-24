@@ -13,17 +13,22 @@ import edu.wpi.first.math.kinematics.*
 import edu.wpi.first.networktables.NetworkTableEntry
 import edu.wpi.first.networktables.NetworkTableInstance
 import edu.wpi.first.units.Measure
-import edu.wpi.first.units.Units.*
+import edu.wpi.first.units.MutableMeasure
+import edu.wpi.first.units.Units.Inches
+import edu.wpi.first.units.Units.Meters
+import edu.wpi.first.units.Units.MetersPerSecond
+import edu.wpi.first.units.Units.Volts
 import edu.wpi.first.units.VoltageUnit
-import edu.wpi.first.util.sendable.Sendable
 import edu.wpi.first.wpilibj.ADIS16470_IMU
 import edu.wpi.first.wpilibj.RobotController.getBatteryVoltage
 import edu.wpi.first.wpilibj.drive.MecanumDrive
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog
+import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Subsystem
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
-import edu.wpi.first.wpilibj.MotorSafety
+import kotlin.math.abs
+import org.photonvision.PhotonCamera
 
 data object DataTable {
 
@@ -90,10 +95,10 @@ object DriveSubsystem : Subsystem {
     private var rearleftFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(1.2000, 2.3000, 1.0419)
     private var rearrightFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(1.2139, 2.3048, 1.1004)
 
-    private val frontleftVelocityPIDController: PIDController = PIDController(0.014414, 0.0, 0.0)
-    private val frontrightVelocityPIDController: PIDController = PIDController(0.00000004005, 0.0, 0.0)
-    private val rearleftVelocityPIDController: PIDController = PIDController(0.014414, 0.0, 0.0)
-    private val rearrightVelocityPIDController: PIDController = PIDController(0.00000004005, 0.0, 0.0)
+    private val frontleftVelocityPIDController: PIDController = PIDController(0.0002, 0.0, 0.0)
+    private val frontrightVelocityPIDController: PIDController = PIDController(0.0002, 0.0, 0.0)
+    private val rearleftVelocityPIDController: PIDController = PIDController(0.0007611074, 0.000008, 0.00086)
+    private val rearrightVelocityPIDController: PIDController = PIDController(0.0007611074, 0.000008, 0.00086)
 
     val pose: Pose2d
         get() = mecanumDriveOdometry.poseMeters
@@ -110,7 +115,7 @@ object DriveSubsystem : Subsystem {
                 )
             )
 
-/*private val appliedVoltage = Volts.mutable(0.0)
+private val appliedVoltage = Volts.mutable(0.0)
 
 private val distance = Meters.mutable(0.0)
 
@@ -154,7 +159,7 @@ private val identificationRoutine =
             // subsystem =
             this,
         ),
-    )*/
+    )
 
 init {
     rightconfig.inverted(false)
@@ -184,7 +189,7 @@ override fun periodic() {
     DataTable.rearrightVelocityEntry.setDouble(rearrightencoder.velocity)
 }
 
-/*fun resetpose (pose: Pose2d) {
+fun resetpose (pose: Pose2d) {
     mecanumDriveOdometry.resetPosition(
         rotation2d, mecanumDriveWheelPositions, pose
     )
@@ -207,23 +212,17 @@ fun driverelative(relativeSpeeds: ChassisSpeeds) {
     frontrightmotor.setVoltage(frontrightFed + frontrightOutput)
     rearleftmotor.setVoltage(rearleftFed + rearleftOutput)
     rearrightmotor.setVoltage(rearrightFed + rearrightOutput)
-}*/
+}
 
 fun mecanumDrive(
-    xSpeed: Double,
-    ySpeed: Double,
+    xspeed: Double,
+    yspeed: Double,
     zRotation: Double,
 ){
+
+    var xSpeed = xspeed
+    var ySpeed = yspeed
+
     mecanumDrive.driveCartesian(xSpeed, ySpeed, zRotation)
 }
-
-/*
-// -- Characterization Commands --
-fun getQuasistaticTestCommand(direction: SysIdRoutine.Direction): Command {
-    return identificationRoutine.quasistatic(direction)
-}
-
-fun getDynamicTestCommand(direction: SysIdRoutine.Direction): Command {
-    return identificationRoutine.dynamic(direction)
-}*/
 }
