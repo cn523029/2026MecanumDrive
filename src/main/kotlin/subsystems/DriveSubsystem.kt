@@ -90,15 +90,15 @@ object DriveSubsystem : Subsystem {
             Pose2d()
         )
 
-    private var frontleftFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(1.2000, 2.3000, 1.0419)
-    private var frontrightFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(1.2139, 2.3048, 1.1004)
-    private var rearleftFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(1.2000, 2.3000, 1.0419)
-    private var rearrightFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(1.2139, 2.3048, 1.1004)
+    private var frontleftFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(4.0, 2.3000, 1.1004)
+    private var frontrightFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(4.0, 2.3000, 1.1004)
+    private var rearleftFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(4.0, 2.3048, 1.0419)
+    private var rearrightFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(4.0, 2.3048, 1.0419)
 
-    private val frontleftVelocityPIDController: PIDController = PIDController(0.0002, 0.0, 0.0)
-    private val frontrightVelocityPIDController: PIDController = PIDController(0.0002, 0.0, 0.0)
-    private val rearleftVelocityPIDController: PIDController = PIDController(0.0007611074, 0.000008, 0.00086)
-    private val rearrightVelocityPIDController: PIDController = PIDController(0.0007611074, 0.000008, 0.00086)
+    private val frontleftVelocityPIDController: PIDController = PIDController(0.0001, 0.0, 0.0)
+    private val frontrightVelocityPIDController: PIDController = PIDController(0.0001, 0.0, 0.0)
+    private val rearleftVelocityPIDController: PIDController = PIDController(0.0003, 0.000004, 0.007)
+    private val rearrightVelocityPIDController: PIDController = PIDController(0.0003, 0.000004, 0.007)
 
     val pose: Pose2d
         get() = mecanumDriveOdometry.poseMeters
