@@ -1,4 +1,4 @@
-package photonvision
+package org.hangar84.mecanum2026.photonvision
 
 import org.photonvision.PhotonCamera
 class cameras {

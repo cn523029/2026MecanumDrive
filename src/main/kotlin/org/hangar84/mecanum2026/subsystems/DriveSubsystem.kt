@@ -1,4 +1,4 @@
-package subsystems
+package org.hangar84.mecanum2026.subsystems
 
 import com.revrobotics.spark.SparkBase
 import com.revrobotics.spark.SparkLowLevel
@@ -13,8 +13,6 @@ import edu.wpi.first.math.kinematics.*
 import edu.wpi.first.networktables.NetworkTableEntry
 import edu.wpi.first.networktables.NetworkTableInstance
 import edu.wpi.first.units.Measure
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units.Inches
 import edu.wpi.first.units.Units.Meters
 import edu.wpi.first.units.Units.MetersPerSecond
 import edu.wpi.first.units.Units.Volts
@@ -24,11 +22,8 @@ import edu.wpi.first.wpilibj.RobotController.getBatteryVoltage
 import edu.wpi.first.wpilibj.drive.MecanumDrive
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog
-import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Subsystem
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
-import kotlin.math.abs
-import org.photonvision.PhotonCamera
 
 data object DataTable {
 
@@ -96,9 +91,9 @@ object DriveSubsystem : Subsystem {
     private var rearrightFeedForward: SimpleMotorFeedforward = SimpleMotorFeedforward(4.0, 2.3048, 1.0419)
 
     private val frontleftVelocityPIDController: PIDController = PIDController(0.0001, 0.0, 0.0)
-    private val frontrightVelocityPIDController: PIDController = PIDController(0.0001, 0.0, 0.0)
-    private val rearleftVelocityPIDController: PIDController = PIDController(0.0003, 0.000004, 0.007)
-    private val rearrightVelocityPIDController: PIDController = PIDController(0.0003, 0.000004, 0.007)
+    private val frontrightVelocityPIDController: PIDController = PIDController(0.0002, 0.0, 0.0)
+    private val rearleftVelocityPIDController: PIDController = PIDController(0.001, 0.000004, 0.007)
+    private val rearrightVelocityPIDController: PIDController = PIDController(0.0013, 0.000004, 0.007)
 
     val pose: Pose2d
         get() = mecanumDriveOdometry.poseMeters
@@ -220,8 +215,8 @@ fun mecanumDrive(
     zRotation: Double,
 ){
 
-    var xSpeed = xspeed
-    var ySpeed = yspeed
+    val xSpeed = xspeed
+    val ySpeed = yspeed
 
     mecanumDrive.driveCartesian(xSpeed, ySpeed, zRotation)
 }
