@@ -16,32 +16,51 @@ object LauncherSubsystem : Subsystem {
     private val followerConfig = SparkMaxConfig()
     private val launcherConfig = SparkMaxConfig()
 
-    val LAUNCH_COMMAND: Command
+    val LAUNCH: Command
         get() =
             runOnce {
                 launcherMotor.set(1.0)
             }
                 .withTimeout(1.0)
                 .andThen({
+                    launcherMotor.set(1.0)
+                    followerLauncherMotor.set(1.0)
+                })
+                .withTimeout(1.0)
+                .andThen({
                     launcherMotor.set(0.0)
+                    followerLauncherMotor.set(0.0)
                 })
 
-    val INTAKE_COMMAND: Command
+    val INTAKE: Command
         get() =
             runOnce {
                 launcherMotor.set(-1.0)
+                followerLauncherMotor.set(-1.0)
             }
                 .withTimeout(1.0)
                 .andThen({
                     launcherMotor.set(0.0)
+                    followerLauncherMotor.set(0.0)
+                })
+    val LAUNCH_FAST: Command
+        get() =
+            runOnce {
+                launcherMotor.set(-1.0)
+                followerLauncherMotor.set(1.0)
+            }
+                .withTimeout(1.0)
+                .andThen({
+                    launcherMotor.set(-1.0)
+                    followerLauncherMotor.set(0.0)
+                })
+                .withTimeout(1.0)
+                .andThen({
+                    launcherMotor.set(1.0)
+                    followerLauncherMotor.set(1.0)
                 })
 
     init {
-        followerLauncherMotor.configure(
-            followerConfig.follow(10),
-            ResetMode.kResetSafeParameters,
-            PersistMode.kPersistParameters
-        )
         launcherMotor.configure(
             launcherConfig.inverted(true),
                 ResetMode.kResetSafeParameters,

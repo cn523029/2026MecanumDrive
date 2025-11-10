@@ -10,7 +10,7 @@ import org.hangar84.mecanum2026.subsystems.DriveSubsystem.mecanumDrive
 import org.hangar84.mecanum2026.subsystems.LauncherSubsystem
 
 object RobotContainer {
-    private val controller : CommandXboxController = CommandXboxController(0)
+    private val controller: CommandXboxController = CommandXboxController(0)
 
     private var autoChooser: SendableChooser<Command>? = null
 
@@ -22,8 +22,6 @@ object RobotContainer {
     init {
         configureBindings()
         cameraSettings()
-        configureNamedCommands()
-
     }
 
     //private val  controller: XboxController = XboxController(0)
@@ -40,15 +38,14 @@ object RobotContainer {
             LauncherSubsystem.run {
                 LauncherSubsystem.launcherMotor.set(-controller.leftTriggerAxis + controller.rightTriggerAxis)
             }
+        controller.a().whileTrue(LauncherSubsystem.LAUNCH_FAST)
+        controller.b().whileTrue(LauncherSubsystem.LAUNCH)
+        controller.x().whileTrue(LauncherSubsystem.INTAKE)
     }
-
-    private fun cameraSettings() {
-
-    }
-
     private fun configureNamedCommands() {
-        NamedCommands.registerCommand("Launch", LauncherSubsystem.LAUNCH_COMMAND)
-
-        NamedCommands.registerCommand("Intake", LauncherSubsystem.INTAKE_COMMAND)
+        NamedCommands.registerCommand("Launch", LauncherSubsystem.LAUNCH)
+        NamedCommands.registerCommand("INTAKE", LauncherSubsystem.INTAKE)
+    }
+    private fun cameraSettings() {
     }
 }
