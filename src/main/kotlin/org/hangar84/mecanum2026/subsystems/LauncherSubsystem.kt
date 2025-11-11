@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj2.command.Subsystem
 
 object LauncherSubsystem : Subsystem {
 
-    val launcherMotor = SparkMax(10, MotorType.kBrushless)
-    private val followerLauncherMotor = SparkMax(9, MotorType.kBrushless)
+    val launcherMotor = SparkMax(10, MotorType.kBrushed)
+    private val followerLauncherMotor = SparkMax(9, MotorType.kBrushed)
 
     private val followerConfig = SparkMaxConfig()
     private val launcherConfig = SparkMaxConfig()
