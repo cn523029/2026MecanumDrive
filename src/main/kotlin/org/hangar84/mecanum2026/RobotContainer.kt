@@ -38,9 +38,9 @@ object RobotContainer {
             LauncherSubsystem.run {
                 LauncherSubsystem.launcherMotor.set(-controller.leftTriggerAxis + controller.rightTriggerAxis)
             }
-        controller.a().whileTrue(LauncherSubsystem.LAUNCH_FAST)
-        controller.b().whileTrue(LauncherSubsystem.LAUNCH)
-        controller.x().whileTrue(LauncherSubsystem.INTAKE)
+        controller.y().whileTrue(LauncherSubsystem.LAUNCH_FAST)
+        controller.x().whileTrue(LauncherSubsystem.LAUNCH)
+        controller.b().whileTrue(LauncherSubsystem.INTAKE)
     }
     private fun configureNamedCommands() {
         NamedCommands.registerCommand("Launch", LauncherSubsystem.LAUNCH)
